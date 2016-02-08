@@ -25,7 +25,7 @@ class Goal(BaseStrategy):
         
 
 
-class Goal2(BaseStrategy):
+class GoalG(BaseStrategy):
   
   def __init__(self):
       BaseStrategy.__init__(self, "Random")
@@ -72,7 +72,7 @@ class Defence2(BaseStrategy):
    
 
 
-class Score(BaseStrategy):
+class ScoreG(BaseStrategy):
      def __init__(self):
       BaseStrategy.__init__(self, "Random")
      
