@@ -6,11 +6,9 @@ Created on Mon Feb  1 16:29:33 2016
 """
 
  
-from strategie import Goal
-from strategie import Defence
-from strategie import ScoreG
-from strategie import GoalG
+
+from strategie import *
 from soccersimulator import SoccerTeam,Player
 
-team1 = SoccerTeam("team1",[Player("CR7",ScoreG()),Player("ramos",GoalG())])
-team2 = SoccerTeam("team2",[Player("pique",Goal()),Player("MESSI",ScoreG())])
+team1 = SoccerTeam("team1",[Player("CR7",attaqueG),Player("ramos",goalG)])
+team2 = SoccerTeam("team2",[Player("pique",goalG),Player("messi",defenseG)])

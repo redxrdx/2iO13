@@ -12,6 +12,29 @@ from soccersimulator import settings
 from tools import *
 from PlayerStrat import *
 
+
+
+
+class Strat(BaseStrategy):
+    def __init__(self,comportement,name):
+        BaseStrategy.__init__(self,name)
+        self.comportement = comportement
+    def compute_strategy(self, state, id_team, id_player):
+        s_miroir = state
+        if id_team==1 :
+            Mystate = PlayerDecorator(s_miroir,id_team , id_player)
+            return self.comportement(Mystate)
+        else :
+            s_miroir = miroir_st(state)
+            Mystate = PlayerDecorator(s_miroir,id_team , id_player)
+            return miroir_sa(self.comportement(Mystate))
+    
+    
+goalG = Strat(goal, "goal")
+attaqueG = Strat(scoreG,"attaquant")
+defenseG = Strat(defence,"defenseur")
+
+
 class Goal(BaseStrategy):
   
   def __init__(self):

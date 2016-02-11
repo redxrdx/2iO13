@@ -10,20 +10,35 @@ from soccersimulator import settings
 from tools import *
 
 
-def goal(MyState,p):   
+def goal(MyState):   
      
  
-    if MyState.distanceBalleG() == 1 :
+   if MyState.sortieGardien() == 1 and MyState.dans_perimetre() == 1 :
    
      
-      return MyState.degager(p)
+      return MyState.degager()
    
-    else:
+   else:
   
-      return MyState.positionG(p)
+      return MyState.positionG()
        
       
       
-def scoreG(MyState,p):
+def scoreG(MyState):
    
-        return MyState.marquer(p)
+      
+
+             return MyState.marquer()
+    
+    
+    
+    
+def defence(MyState):
+
+
+    if (MyState.balle_chez_adv()) :
+        return  MyState.suivre_jeu()
+    else :
+        return MyState.defendre()
+
+        
