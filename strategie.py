@@ -33,7 +33,8 @@ class Strat(BaseStrategy):
 goalG = Strat(goal, "goal")
 attaqueG = Strat(scoreG,"attaquant")
 defenseG = Strat(defence,"defenseur")
-
+lateralG = Strat(lateral,"lateral")
+pointe = Strat(fullStrike,"pointe")
 
 class Goal(BaseStrategy):
   

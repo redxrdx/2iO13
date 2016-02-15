@@ -45,6 +45,25 @@ class PlayerDecorator :
 
     def position_balle(self):
         return self.state.ball.position
+    
+    def cornerX(self):
+        if (self.position_balle().x >= settings.GAME_WIDTH-10):
+            return 1
+        else:
+            return 0
+        
+    def cornerYH(self):
+        if( self.position_balle().y >= (settings.GAME_HEIGHT - 10) ):
+            return 1
+        else:
+             return 0
+          
+    def cornerYB(self):
+   
+       if(self.position_balle().y <= (settings.GAME_HEIGHT - 80) ):
+        return 1
+       else :
+        return 0
         
         
     def balle_chez_adv(self):
@@ -60,6 +79,8 @@ class PlayerDecorator :
     def possede_balle(self):
         if(self.position_balle() == self.position_joueur() ) :
           return 1
+        else:
+            return 0
         
     def balle_chez_nous(self):
          if (self.position_balle().x < settings.GAME_WIDTH / 2):
@@ -81,7 +102,46 @@ class PlayerDecorator :
     def non_tir (self) :
         return Vector2D(0,0);
     
+    def tir_leger(self) :
+      
+      if (self.position_balle().y >= settings.GAME_HEIGHT/2) :    
+        x =random.randrange(0,1)-0.5        
+        return Vector2D(angle = x , norm =2)
+      else:
+          return Vector2D(angle = 0.5 , norm =2)
+      
+    def centrerH(self):
+        if (self.cornerX() == 1 and self.cornerYH() == 1 ):
+                   
+            return True
+            
+    def centrerB(self):
+
+        if (self.cornerX() == 1 and self.cornerYB() == 1 ):
+            return True
+            
+    def aller_centrer(self):
+         x = SoccerAction(self.position_balle() - self.position_joueur(), Vector2D(angle = 0.5 , norm =1.5))
+         y = SoccerAction(self.position_balle() - self.position_joueur(), Vector2D(angle = (0.5-1) , norm =1.5))
+         if (self.position_balle().y > settings.GAME_HEIGHT/2):
+               return x
+         else:
+               return y
+          
         
+    def tirer_centreH(self):
+     
+     return SoccerAction(self.position_balle() - self.position_joueur(),Vector2D((settings.GAME_WIDTH*2) /3,settings.GAME_HEIGHT/2)-self.position_joueur())         
+            
+            
+    def tirer_centreB(self):
+     
+     return SoccerAction(self.position_balle() - self.position_joueur(),Vector2D(-settings.GAME_WIDTH/2,settings.GAME_HEIGHT))            
+    
+#    def Aller_centre(self):
+#        if (self.cornerX and self.cornerY == 1 ):
+#            return        
+    
     def position_but_adv(self):
         return (Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2))
       
@@ -95,17 +155,33 @@ class PlayerDecorator :
         return SoccerAction(self.position_balle() - self.position_joueur() , self.tirer())
         
     def conserver(self):
-        return SoccerAction(self.position_balle()-self.position_joueur() , self.non_tir())
+        return SoccerAction(self.position_balle()-self.position_joueur() , self.tir_leger())
     
     def degager(self):
         return SoccerAction(self.position_balle() - self.position_joueur(),self.degage_alea())
         
     def positionG(self):
-        return SoccerAction((Vector2D(10,settings.GAME_HEIGHT/2))-self.position_joueur(), self.tirer())
+        return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2))-self.position_joueur(), self.tirer())
     
     def defendre (self):
-        return SoccerAction(self.position_balle() - self.position_joueur(),self.degage())
+        return SoccerAction(self.position_balle() - self.position_joueur(),Vector2D(settings.GAME_HEIGHT,0))
     
+    def avant_centre(self):
+        return SoccerAction(Vector2D((settings.GAME_WIDTH*2) /3,settings.GAME_HEIGHT/2)-self.position_joueur(),self.non_tir())
+
+    def millieu(self):
+        return SoccerAction(Vector2D((settings.GAME_WIDTH) /3,settings.GAME_HEIGHT/2)-self.position_joueur(),self.non_tir())
+
+
+    def zone_cage(self):
+        
+        if self.position_balle().y>= (settings.GAME_HEIGHT /2)-5 and self.position_balle().y<= (settings.GAME_HEIGHT /2)+5 :
+            return 1
+        else:
+            return 0
+    
+    def suivre_jeuG (self):
+      return SoccerAction(Vector2D(5,self.position_balle().y)-self.position_joueur(), self.tirer())
     
     def suivre_jeu(self):
         return SoccerAction(Vector2D(settings.GAME_WIDTH /3,self.position_balle().y)-self.position_joueur(), self.tirer())
@@ -149,13 +225,16 @@ class PlayerDecorator :
     def sortieGardien(self) :
          if( self.position_balle().x < settings.GAME_WIDTH / 6 ) :
              return 1
-             
+         else:
+             return 0
     def zone_de_tir(self) :
          if( self.position_balle().x > settings.GAME_WIDTH / 6 ) :
              return 1         
-       
+         else:
+             return 0
     def dans_perimetre(self) :
         if (self.position_balle().y > settings.GAME_HEIGHT/3 and self.position_balle().y < (settings.GAME_HEIGHT*2) / 3) :
             return 1
-         
+        else:
+             return 0
    
