@@ -46,6 +46,9 @@ class PlayerDecorator :
     def position_balle(self):
         return self.state.ball.position
     
+    def distance_balle(self):
+        return self.state.player_state(self.id_team, self.id_player).position.distance(self.state.ball.position)     
+    
     def cornerX(self):
         if (self.position_balle().x >= settings.GAME_WIDTH-10):
             return 1
@@ -67,7 +70,7 @@ class PlayerDecorator :
         
         
     def balle_chez_adv(self):
-        if (self.position_balle().x > settings.GAME_WIDTH / 2):
+        if (self.position_balle().x >= settings.GAME_WIDTH / 2):
             return True
         else:
             return False
@@ -88,9 +91,21 @@ class PlayerDecorator :
          else:
             return False
     
+    def balle_en_def(self):
+         if (self.position_balle().x < settings.GAME_WIDTH / 4):
+            return 1
+         else:
+            return 0
+      
+    def balle_au_mil(self):
+         if (self.position_balle().x <= settings.GAME_WIDTH / 2.5 and self.position_balle().x >= settings.GAME_WIDTH / 1.5 ):
+            return 1
+         else:
+            return 0
+            
     def tirer(self):
        
-       
+      
        if (self.position_balle().y > settings.GAME_HEIGHT/2):
            return Vector2D (settings.GAME_HEIGHT,-(self.position_balle().y - settings.GAME_HEIGHT/2))
        
@@ -104,12 +119,22 @@ class PlayerDecorator :
     
     def tir_leger(self) :
       
-      if (self.position_balle().y >= settings.GAME_HEIGHT/2) :    
-        x =random.randrange(0,1)-0.5        
+      if (self.position_balle().y > settings.GAME_HEIGHT/2) :    
+        x =0-0.5       
         return Vector2D(angle = x , norm =2)
-      else:
+      elif (self.position_balle().y < settings.GAME_HEIGHT/2) : 
           return Vector2D(angle = 0.5 , norm =2)
+      else:
+          return Vector2D(angle = 0 , norm =2)
+  
+  
+    def tir_legerD(self) :
       
+      if (self.position_balle().y >= settings.GAME_HEIGHT/2) :    
+        return Vector2D(angle = 3*(3.12)/2 , norm =2)
+      else:
+        return Vector2D(angle = 3.12/2 , norm =2)    
+    
     def centrerH(self):
         if (self.cornerX() == 1 and self.cornerYH() == 1 ):
                    
@@ -141,7 +166,13 @@ class PlayerDecorator :
 #    def Aller_centre(self):
 #        if (self.cornerX and self.cornerY == 1 ):
 #            return        
-    
+    def tirer_vers(self, c):        
+        return SoccerAction( self.position_balle()-self.position_joueur() ,c - self.position_joueur())
+        
+    def aller_vers(self, c):        
+        return SoccerAction( c - self.position_joueur() ,self.non_tir())
+        
+        
     def position_but_adv(self):
         return (Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2))
       
@@ -156,18 +187,30 @@ class PlayerDecorator :
         
     def conserver(self):
         return SoccerAction(self.position_balle()-self.position_joueur() , self.tir_leger())
+        
+    def conserver2(self):
+        return SoccerAction(self.position_balle()-self.position_joueur() , self.tir_legerD())
     
     def degager(self):
         return SoccerAction(self.position_balle() - self.position_joueur(),self.degage_alea())
         
     def positionG(self):
-        return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2))-self.position_joueur(), self.tirer())
+        return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2))-self.position_joueur(), self.degage())
+    
+    def positionGH(self):
+        return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2)+5)-self.position_joueur(), self.degage())
+     
+    def positionGB(self):
+        return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2)-5)-self.position_joueur(), self.degage())
+        
+    def positionDC(self):
+        return SoccerAction((Vector2D(20,settings.GAME_HEIGHT/2))-self.position_joueur(), self.tirer())
     
     def defendre (self):
         return SoccerAction(self.position_balle() - self.position_joueur(),Vector2D(settings.GAME_HEIGHT,0))
     
     def avant_centre(self):
-        return SoccerAction(Vector2D((settings.GAME_WIDTH*2) /3,settings.GAME_HEIGHT/2)-self.position_joueur(),self.non_tir())
+        return SoccerAction(Vector2D((settings.GAME_WIDTH*4) /5,settings.GAME_HEIGHT/2)-self.position_joueur(),self.non_tir())
 
     def millieu(self):
         return SoccerAction(Vector2D((settings.GAME_WIDTH) /3,settings.GAME_HEIGHT/2)-self.position_joueur(),self.non_tir())
@@ -179,20 +222,26 @@ class PlayerDecorator :
             return 1
         else:
             return 0
+            
+    def zone_def(self):
+        if self.position_balle().y>= (settings.GAME_HEIGHT /3) and self.position_balle().y<= 2*(settings.GAME_HEIGHT /3) :
+            return 1
+        else:
+            return 0
+
     
     def suivre_jeuG (self):
       return SoccerAction(Vector2D(5,self.position_balle().y)-self.position_joueur(), self.tirer())
     
     def suivre_jeu(self):
-        return SoccerAction(Vector2D(settings.GAME_WIDTH /3,self.position_balle().y)-self.position_joueur(), self.tirer())
+        return SoccerAction(Vector2D(settings.GAME_WIDTH /5,self.position_balle().y)-self.position_joueur(), self.tirer())
         
-    def defense(self):
-        v= Vector2D(settings.GAME_WIDTH*1/5,settings.GAME_HEIGHT/2.)
-        return self.retour_position(v)
+    def suivre_jeuM(self):
+        return SoccerAction(Vector2D((settings.GAME_WIDTH)/1.8,self.position_balle().y)-self.position_joueur(), self.tirer())   
+        
+    def suivre_jeuDC(self):
+        return SoccerAction(Vector2D((settings.GAME_WIDTH)/10,self.position_balle().y)-self.position_joueur(), self.tirer())    
     
-    def retour_position(self, v):
-         return SoccerAction(v - self.position_joueur(),Vector2D())
-         
          
     def distanceAll(self):
         v = self.state.player(1,0).position 
@@ -223,12 +272,12 @@ class PlayerDecorator :
      
      
     def sortieGardien(self) :
-         if( self.position_balle().x < settings.GAME_WIDTH / 6 ) :
+         if( self.position_balle().x < settings.GAME_WIDTH / 8 ) :
              return 1
          else:
              return 0
     def zone_de_tir(self) :
-         if( self.position_balle().x > settings.GAME_WIDTH / 6 ) :
+         if( self.position_balle().x > settings.GAME_WIDTH - 30) :
              return 1         
          else:
              return 0
@@ -237,4 +286,43 @@ class PlayerDecorator :
             return 1
         else:
              return 0
-   
+    def tir_but(self):
+        return SoccerAction( self.position_balle()-self.position_joueur() , Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_joueur())
+        
+    def distance_joueur(self,id_team,id_player):
+        return self.position_joueur().distance(self.state.player_state(id_team,id_player).position)
+        
+    def distance_au_joueur(self):
+
+        j = 0
+        for (id_team, id_player) in self.state.players :
+            if id_team != self.id_team and self.distance_joueur(id_team,id_player) < 30 and (self.state.player_state(id_team, id_player).position.x >= self.position_joueur().x):
+                j=j+1
+        if j != 0:
+            return 1
+        else :
+            return 0
+  
+    def dj2(self):
+    
+        for (id_team, id_player) in self.state.players :
+            if id_team != self.id_team and self.distance_joueur(id_team,id_player) < 30 and (self.state.player_state(id_team, id_player).position.x >= self.position_joueur().x):
+                
+        
+              return self.state.player_state(id_team, id_player)
+            else :
+             return 0
+      
+    def defendre_Sur(self,v):
+        return SoccerAction(self.v - self.position_joueur(),Vector2D(settings.GAME_HEIGHT,0))
+        
+    def possede_balleAll(self):
+
+        j = 0
+        for (id_team, id_player) in self.state.players :
+            if id_team == self.id_team and (self.state.player_state(id_team, id_player).position == self.position_balle()):
+                j=j+1
+        if j != 0:
+            return 1
+        else :
+            return 0

@@ -6,7 +6,7 @@ Created on Mon Feb  1 16:23:06 2016
 """
 
 
-from soccersimulator import BaseStrategy, SoccerAction
+from soccersimulator import BaseStrategy, SoccerAction, KeyboardStrategy
 from soccersimulator import Vector2D
 from soccersimulator import settings
 from tools import *
@@ -30,12 +30,21 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
     
+keytest = KeyboardStrategy(fn = "mon_fichier")
+
 goalG = Strat(goal, "goal")
 attaqueG = Strat(scoreG,"attaquant")
 defenseG = Strat(defence,"defenseur")
 lateralG = Strat(lateral,"lateral")
 pointe = Strat(fullStrike,"pointe")
+millieu = Strat(millieu,"millieu")
+central = Strat(Dcentral,"dc")
 
+keytest.add("g",goalG)
+keytest.add("d",defenseG)
+keytest.add("a",attaqueG)
+keytest.add("m",millieu)
+keytest.add("l",lateralG)
 class Goal(BaseStrategy):
   
   def __init__(self):
