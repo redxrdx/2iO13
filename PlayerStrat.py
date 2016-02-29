@@ -10,6 +10,20 @@ from soccersimulator import settings
 from tools import *
 
 
+
+def conserver(MyState):
+    return MyState.conserver2()
+    
+def tirer(MyState):
+    return MyState.tir_but()
+    
+def dribbler(MyState):
+    return MyState.dribbler()
+
+def passer(MyState):
+    return MyState.passer()
+
+
 def goal(MyState):   
       
      
@@ -37,7 +51,7 @@ def scoreG(MyState):
         
          return MyState.tir_but()
      else:
-         return MyState.conserver()
+         return MyState.conserver2()
   else:
        return MyState.aller_vers(x)     
     
@@ -58,7 +72,6 @@ def defence(MyState):
     return MyState.suivre_jeu()
  
      
-
 
 
 def fullStrike(MyState) :
@@ -94,6 +107,7 @@ def fullStrike(MyState) :
 #     return MyState.avant_centre()      
 # 
 
+    
 def millieu(MyState) :
    
    x = Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT/2) 
@@ -142,8 +156,8 @@ def Dcentral(MyState):
   if MyState.balle_chez_nous():    
     
     if (MyState.distance_au_joueur() == 1 ):
-         return MyState.defendre()
-    elif(MyState.position_balle().x < 20):
+         return MyState.dj2()
+    elif(MyState.position_balle().x < 20 and MyState.distance_au_joueur() == 0 ):
          return MyState.defendre()
     else:    
          return MyState.positionDC()

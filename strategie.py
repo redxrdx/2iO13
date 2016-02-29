@@ -40,11 +40,23 @@ pointe = Strat(fullStrike,"pointe")
 millieu = Strat(millieu,"millieu")
 central = Strat(Dcentral,"dc")
 
-keytest.add("g",goalG)
+conserver = Strat(conserver,"conserver")
+tirer = Strat(tirer,"tirer")
+dribbler = Strat(dribbler,"dribbler")
+passer = Strat(passer,"passer")
+
+
+
 keytest.add("d",defenseG)
 keytest.add("a",attaqueG)
-keytest.add("m",millieu)
-keytest.add("l",lateralG)
+keytest.add("z",millieu)
+
+keytest.add("t",tirer)
+keytest.add("c",conserver)
+keytest.add("g",dribbler)
+keytest.add("q",passer)
+
+
 class Goal(BaseStrategy):
   
   def __init__(self):

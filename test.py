@@ -14,3 +14,4 @@ from team import *
 #show(SoccerMatch(team1j,team12j))
 #show(SoccerMatch(teama4,teamPSG4))
 show(SoccerMatch(team2j,team2j2))
+#show(SoccerMatch(team2j,teamIA))
