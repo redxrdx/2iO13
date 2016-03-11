@@ -11,6 +11,11 @@ from tools import *
 
 
 
+# commandes basiques : 
+
+def finition(MyState):
+    return MyState.finition()
+    
 def conserver(MyState):
     return MyState.conserver2()
     
@@ -21,13 +26,32 @@ def dribbler(MyState):
     return MyState.dribbler()
 
 def passer(MyState):
-    return MyState.passer()
-
+   if (MyState.faire_passe() == True) :  
+     print("faire passe ok")
+     return MyState.passer()
+   else : 
+       return MyState.conserver2();
+    # attaquant  
+def position(MyState):
+    return MyState.avant_centre()
+   #gardien
+    
+def posG(MyState):
+    return MyState.positionG()
+def posGH(MyState):
+    return MyState.positionGH()
+def posGB(MyState):
+    return MyState.positionGB()
+def degG(MyState):
+    return MyState.degager()
+    
+    
+#classes :
 
 def goal(MyState):   
       
      
-   if (MyState.dans_perimetre() == 1 and MyState.sortieGardien() == 1   and MyState.distance_au_joueur() == 0) :
+   if (MyState.dans_perimetre() == 1 and MyState.sortieGardien() == 1   and MyState.distance_au_joueur() == 1) :
      
       return MyState.degager()
    
@@ -83,7 +107,7 @@ def fullStrike(MyState) :
      
      if MyState.balle_au_mil() == 1:   
      
-         return MyState.aller_vers(x) + MyState.marquer()
+         return MyState.aller_vers(x) + MyState.tir_but()
      else:
          return MyState.avant_centre()
     
@@ -92,7 +116,7 @@ def fullStrike(MyState) :
     if MyState.position_balle().x <=(settings.GAME_WIDTH*2)/3:
       return MyState.avant_centre()   
     else :
-      return MyState.marquer()
+      return MyState.tir_but()
 #           
 #     return MyState.avant_centre()      
 # 
@@ -106,7 +130,18 @@ def fullStrike(MyState) :
 #     
 #     return MyState.avant_centre()      
 # 
-
+def j1(MyState):
+     if MyState.balle_chez_nous():    
+         if (MyState.distance_balle < 5):
+             return MyState.conserver2()
+         else:
+             return MyState.defendre()
+     else:
+        if (MyState.position_balle().x > settings.GAME_WIDTH - 50):
+            return MyState.tir_but()
+        else:
+            return MyState.conserver2()
+    
     
 def millieu(MyState) :
    

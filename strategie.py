@@ -30,7 +30,7 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
     
-keytest = KeyboardStrategy(fn = "mon_fichier")
+keytest = KeyboardStrategy(fn = "mon_fichier.exp")
 
 goalG = Strat(goal, "goal")
 attaqueG = Strat(scoreG,"attaquant")
@@ -39,23 +39,29 @@ lateralG = Strat(lateral,"lateral")
 pointe = Strat(fullStrike,"pointe")
 millieu = Strat(millieu,"millieu")
 central = Strat(Dcentral,"dc")
+joueur1 = Strat(j1,"j1")
 
 conserver = Strat(conserver,"conserver")
 tirer = Strat(tirer,"tirer")
 dribbler = Strat(dribbler,"dribbler")
 passer = Strat(passer,"passer")
-
-
+finition = Strat(finition,"finition")
+position = Strat(position,"position")
+posG= Strat(posG,"position")
+posGH = Strat(posGH,"position")
+posGB = Strat(posGB,"position")
+degG = Strat(degG,"position")
 
 keytest.add("d",defenseG)
 keytest.add("a",attaqueG)
 keytest.add("z",millieu)
-
+#keytest.add("c",central)
 keytest.add("t",tirer)
 keytest.add("c",conserver)
 keytest.add("g",dribbler)
 keytest.add("q",passer)
-
+keytest.add("f",finition)
+keytest.add("x",position)
 
 class Goal(BaseStrategy):
   

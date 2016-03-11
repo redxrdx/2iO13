@@ -39,7 +39,9 @@ class PlayerDecorator :
         self.state = state
         self.id_team = id_team
         self.id_player = id_player
-        
+    
+
+# position joueur et balle    
     def position_joueur(self):
           return self.state.player_state(self.id_team, self.id_player).position  
 
@@ -48,7 +50,9 @@ class PlayerDecorator :
     
     def distance_balle(self):
         return self.state.player_state(self.id_team, self.id_player).position.distance(self.state.ball.position)     
-    
+
+
+#positions pour corner    
     def cornerX(self):
         if (self.position_balle().x >= settings.GAME_WIDTH-10):
             return 1
@@ -67,6 +71,8 @@ class PlayerDecorator :
         return 1
        else :
         return 0
+        
+# actions concernant la balle
         
         
     def balle_chez_adv(self):
@@ -102,7 +108,10 @@ class PlayerDecorator :
             return 1
          else:
             return 0
-            
+     
+
+
+# differents tirs :       
     def tirer(self):
        
       
@@ -176,15 +185,8 @@ class PlayerDecorator :
         return SoccerAction( self.position_balle()-self.position_joueur() ,c - self.position_joueur())
         
     def passer_vers(self, c):        
-        return SoccerAction( self.position_balle()-self.position_joueur() ,c.position - self.position_joueur())
-        
-    def aller_vers(self, c):        
-        return SoccerAction( c - self.position_joueur() ,self.non_tir())
-        
-        
-    def position_but_adv(self):
-        return (Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2))
-      
+        return SoccerAction( self.position_balle()-self.position_joueur() ,Vector2D(c.position.x,c.position.y)-self.position_joueur())
+    
     def degage(self):
         return Vector2D(settings.GAME_HEIGHT,20)
 
@@ -202,9 +204,21 @@ class PlayerDecorator :
     
     def degager(self):
         return SoccerAction(self.position_balle() - self.position_joueur(),self.degage_alea())
+
+# deplacements et placement     
+  
+
+    def aller_vers(self, c):        
+        return SoccerAction( c - self.position_joueur() ,self.non_tir())
+        
+        
+    def position_but_adv(self):
+        return (Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2))
+      
+   
         
     def positionG(self):
-        return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2))-self.position_joueur(), self.degage())
+        return SoccerAction((Vector2D(5,settings.GAME_HEIGHT/2))-self.position_joueur(), self.tirer())
     
     def positionGH(self):
         return SoccerAction((Vector2D(2,settings.GAME_HEIGHT/2)+5)-self.position_joueur(), self.degage())
@@ -251,37 +265,9 @@ class PlayerDecorator :
     def suivre_jeuDC(self):
         return SoccerAction(Vector2D((settings.GAME_WIDTH)/10,self.position_balle().y)-self.position_joueur(), self.tirer())    
     
-         
-    def distanceAll(self):
-        v = self.state.player(1,0).position 
-        w = self.state.player(1,1).position
-        return v.distance(w)
-        
-    def distanceAdv(self):
-        v = self.position_joueur  
-        w = self.state.player(2,1).position
-        return v.distance(w)
-        
-    def distanceBalle(self):
-    
-     i=1
-     j=0
-     for i in range(1,self.id_team) :
-        for j in range(0,self.id_player):
-         
-           v = self.state.player(i,j).position 
-           w = self.position_balle
-        if v.distance(w) < 10 :
-        
-            return  self.state.player(i,j)
-        j = j+1         
-     i = i+1
-     
-     return 0
-     
      
     def sortieGardien(self) :
-         if( self.position_balle().x < settings.GAME_WIDTH / 8 ) :
+         if( self.position_balle().x < settings.GAME_WIDTH / 6 ) :
              return 1
          else:
              return 0
@@ -297,7 +283,10 @@ class PlayerDecorator :
              return 0
     def tir_but(self):
         return SoccerAction( self.position_balle()-self.position_joueur() , Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_joueur())
-        
+       
+    def finition(self):
+        return SoccerAction( self.position_balle()-self.position_joueur() , (Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_joueur()).normalize().scale(5))
+           
     def distance_joueur(self,id_team,id_player):
         return self.position_joueur().distance(self.state.player_state(id_team,id_player).position)
         
@@ -336,27 +325,24 @@ class PlayerDecorator :
              return SoccerAction(0,0)
       
     def defendre_Sur(self,v):
+        
         return SoccerAction(v.position - self.position_joueur(),Vector2D(settings.GAME_HEIGHT,0))
         
-    def possede_balleAll(self):
-
-        j = 0
-        for (id_team, id_player) in self.state.players :
-            if id_team == self.id_team and (self.state.player_state(id_team, id_player).position == self.position_balle()):
-                j=j+1
-        if j != 0:
-            return 1
-        else :
-            return 0
-            
+   
+    def faire_passe(self):
+        if(self.distance_balle() < 3):
+            return True
+        else:
+            return False
+   
     def passer(self):
-    
         j = 0
-        for (id_team, id_player) in self.state.players :
-            if id_team == self.id_team and self.distance_joueur(id_team,id_player) < 50:
-    
-              return self.passer_vers(self.state.player_state(id_team, id_player))
+        for (id_t, id_p) in self.state.players :
+            if id_t == self.id_team and self.distance_joueur(id_t,id_p) <= 50:
+               print("passer vers")
+               return self.passer_vers(self.state.player_state(id_t, id_p))
             else:
                 j = j+1
+        print("j =" ,str(j))
         if j != 0 :
              return self.conserver2()

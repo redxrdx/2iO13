@@ -10,8 +10,8 @@ from soccersimulator import SoccerMatch
 from team import *
  
 #if __name__ == __main__:
-#show(SoccerMatch(teamPSG4,teamREAL))
-#show(SoccerMatch(team1j,team12j))
-#show(SoccerMatch(teama4,teamPSG4))
-show(SoccerMatch(team2j,team2j2))
-#show(SoccerMatch(team2j,teamIA))
+#show(SoccerMatch(teama4,teamREAL))
+#show(SoccerMatch(team1j,team2j))
+#show(SoccerMatch(teamPSG4,teama4))
+#show(SoccerMatch(team2j,team2j2))
+show(SoccerMatch(teama4,teamIA))
