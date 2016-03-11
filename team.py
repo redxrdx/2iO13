@@ -15,6 +15,8 @@ import os
 
 fn = os.path.join(os.path.dirname(os.path.realpath(__file__)), "millieu.pkl")
 fn2 = os.path.join(os.path.dirname(os.path.realpath(__file__)), "attaque.pkl")
+fn3 = os.path.join(os.path.dirname(os.path.realpath(__file__)), "defense.pkl")
+
 
 team2j = SoccerTeam("k2",[Player("serge",defenseG),Player("ramos",attaqueG)])
 team2j2 = SoccerTeam("team2",[Player("pique",attaqueG),Player("masherano",defenseG)])
