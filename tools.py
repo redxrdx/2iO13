@@ -49,7 +49,7 @@ class PlayerDecorator :
         return self.state.ball.position
     
     def distance_balle(self):
-        return self.state.player_state(self.id_team, self.id_player).position.distance(self.state.ball.position)     
+        return self.position_joueur().distance(self.state.ball.position)     
 
 
 #positions pour corner    
@@ -86,10 +86,10 @@ class PlayerDecorator :
     
     
     def possede_balle(self):
-        if(self.position_balle() == self.position_joueur() ) :
-          return 1
+        if(self.distance_balle() < (settings.PLAYER_RADIUS + settings.BALL_RADIUS) ) :
+          return True
         else:
-            return 0
+            return False
         
     def balle_chez_nous(self):
          if (self.position_balle().x < settings.GAME_WIDTH / 2):
@@ -285,7 +285,7 @@ class PlayerDecorator :
         return SoccerAction( self.position_balle()-self.position_joueur() , Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_joueur())
        
     def finition(self):
-        return SoccerAction( self.position_balle()-self.position_joueur() , (Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_joueur()).normalize().scale(5))
+        return SoccerAction( self.position_balle()-self.position_joueur() , (Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_joueur()).normalize().scale(3))
            
     def distance_joueur(self,id_team,id_player):
         return self.position_joueur().distance(self.state.player_state(id_team,id_player).position)
@@ -346,3 +346,61 @@ class PlayerDecorator :
         print("j =" ,str(j))
         if j != 0 :
              return self.conserver2()
+             
+             
+#    def accelerer(self):
+#        self.state.player_state(self.id_team, self.id_player).vitesse() = settings.maxPlayerSpeed * 2
+#        
+        
+ ######################################################################################################################
+ ########################    pour le Qlearning    ######################################################
+    
+    
+
+    def position_mesbuts(self):
+       self.position_joueur().distance(Vector2D(0,settings.GAME_HEIGHT/2.))    
+       
+    def position_butsadv(self):
+       self.position_joueur().distance(Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2.))    
+    
+    def distance_adversairexy(self, x , y):
+
+        j = 0
+        for (id_team, id_player) in self.state.players :
+            if (id_team != self.id_team and self.distance_joueur(id_team,id_player) >= x and self.distance_joueur(id_team,id_player) < y):
+                j=j+1
+        if j != 0:
+            return True
+        else :
+            return False
+ 
+    def distance_alliexy(self,x,y):
+
+        j = 0
+        for (id_team, id_player) in self.state.players :
+            if (id_team == self.id_team and self.distance_joueur(id_team,id_player) >= x and self.distance_joueur(id_team,id_player)< y):
+                j=j+1
+        if j != 0:
+            return True
+        else :
+            return False
+            
+            
+    def distance_Mesbuts(self,x,y):
+        
+      if (self.position_mesbuts() >= x and self.position_mesbuts() < y):
+        return True
+      else:
+        return False
+  
+    
+              
+    def distance_butsadv(self,x,y):
+        
+      if (self.position_butsadv() >= x and self.position_butsadv() < y):
+        return True
+      else:
+        return False
+                      
+   
+        

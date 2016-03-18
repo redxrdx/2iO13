@@ -9,7 +9,7 @@ from soccersimulator import settings, SoccerAction,Vector2D,DecisionTreeClassifi
 from soccersimulator import export_graphviz
 import cPickle
 import sys
-
+from tools import *
 
 ## Fonction de generation de descripteurs
 def gen_features(state,id_team,id_player):
@@ -23,6 +23,36 @@ def gen_features(state,id_team,id_player):
 gen_features.names = ["ball_dist","mygoal_dist","hisgoal_dist"]
 
 
+def Qlearning (state,id_team,id_player):
+ 
+     Mystate = PlayerStateDecorator(state,id_team,id_player)
+     
+       #Distance allie  
+     if Mystate.distance_alliexy(0,10): 
+        pa = 0
+     elif Mystate.distance_alliexy(10,20):
+        pa = 1
+     elif Mystate.distance_alliexy(20,30):
+        pa = 2
+     elif Mystate.distance_alliexy(30,40):
+        pa = 3
+     else :
+        pa = 4
+        
+        
+        
+            # Distance adversaire    
+     if Mystate.distance_adversairexy(0,10): 
+        pa = 0
+     elif Mystate.distance_adversairexy(10,20):
+        pa = 1
+     elif Mystate.distance_adversairexy(20,30):
+        pa = 2
+     elif Mystate.distance_adversairexy(30,40):
+        pa = 3
+     else :
+        pa = 4
+ 
 def build_apprentissage(fn,generator):
     ex_raw = KeyboardStrategy.read(fn)
     exemples = []

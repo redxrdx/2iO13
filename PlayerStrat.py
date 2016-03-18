@@ -23,7 +23,11 @@ def tirer(MyState):
     return MyState.tir_but()
     
 def dribbler(MyState):
-    return MyState.dribbler()
+    MyState.dribbler() 
+    
+    
+def accelerer(MyState):
+    MyState.accelerer()
 
 def passer(MyState):
    if (MyState.faire_passe() == True) :  
@@ -31,10 +35,16 @@ def passer(MyState):
      return MyState.passer()
    else : 
        return MyState.conserver2();
-    # attaquant  
+  
+
+
+  # attaquant  
 def position(MyState):
     return MyState.avant_centre()
-   #gardien
+ 
+
+
+  #gardien
     
 def posG(MyState):
     return MyState.positionG()

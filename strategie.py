@@ -30,7 +30,7 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
     
-keytest = KeyboardStrategy(fn = "mon_fichier.exp")
+keytest = KeyboardStrategy(fn = "mon_fichier2.exp")
 
 goalG = Strat(goal, "goal")
 attaqueG = Strat(scoreG,"attaquant")
@@ -51,7 +51,9 @@ posG= Strat(posG,"position")
 posGH = Strat(posGH,"position")
 posGB = Strat(posGB,"position")
 degG = Strat(degG,"position")
+accelerer = Strat(accelerer,"accelerer")
 
+#keytest.add("a",accelerer)
 keytest.add("d",defenseG)
 keytest.add("a",attaqueG)
 keytest.add("z",millieu)
