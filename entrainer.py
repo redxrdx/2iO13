@@ -28,7 +28,7 @@ if __name__=="__main__":
 #    keytest.add("d",posGH)
 #    keytest.add("c",posGB)   
 #    keytest.add("x",degG)
-    keytest.add("a",accelerer)
+    
    
     team_noob = SoccerTeam("keyb",[Player("KBs",millieu),Player("Defense",defenseG),Player("taaaaaa",attaqueG),Player("Dg",goalG)])
     teama4 = SoccerTeam("test",[Player("t",defenseG),Player("Defense",keytest)])

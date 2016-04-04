@@ -51,9 +51,8 @@ posG= Strat(posG,"position")
 posGH = Strat(posGH,"position")
 posGB = Strat(posGB,"position")
 degG = Strat(degG,"position")
-accelerer = Strat(accelerer,"accelerer")
 
-#keytest.add("a",accelerer)
+
 keytest.add("d",defenseG)
 keytest.add("a",attaqueG)
 keytest.add("z",millieu)

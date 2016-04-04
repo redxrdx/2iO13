@@ -84,6 +84,8 @@ class PlayerDecorator :
     def chercher_balle(self):
         return SoccerAction(self.position_balle()-self.position_joueur() , self.non_tir())
     
+    def rien(self):
+        return SoccerAction(0,0)
     
     def possede_balle(self):
         if(self.distance_balle() < (settings.PLAYER_RADIUS + settings.BALL_RADIUS) ) :
@@ -182,10 +184,10 @@ class PlayerDecorator :
 #        if (self.cornerX and self.cornerY == 1 ):
 #            return        
     def tirer_vers(self, c):        
-        return SoccerAction( self.position_balle()-self.position_joueur() ,c - self.position_joueur())
+        return SoccerAction( self.position_balle()-self.position_joueur() ,Vector2D(c.x,c.y))
         
     def passer_vers(self, c):        
-        return SoccerAction( self.position_balle()-self.position_joueur() ,Vector2D(c.position.x,c.position.y)-self.position_joueur())
+        return Vector2D(c.position.x,c.position.y)-self.position_joueur()
     
     def degage(self):
         return Vector2D(settings.GAME_HEIGHT,20)
@@ -347,10 +349,30 @@ class PlayerDecorator :
         if j != 0 :
              return self.conserver2()
              
+#     def possedeBalleAll(self):
+#        j = 0
+#        for (id_t, id_p) in self.state.players :
+#            if id_t == self.id_team and self.state.player_state(id_t, id_p).possede_balle()
+#               return self.passer_vers(self.state.player_state(id_t, id_p))
+#            else:
+#                j = j+1
+#        print("j =" ,str(j))
+#        if j != 0 :
+#             return self.conserver2()
              
-#    def accelerer(self):
-#        self.state.player_state(self.id_team, self.id_player).vitesse() = settings.maxPlayerSpeed * 2
-#        
+    def passerAll(self):
+        j = 0
+        for (id_t, id_p) in self.state.players :
+            if (j is None and  id_t == self.id_team and id_p != self.id_player):
+                j = self.state.player_state(id_t, id_p).position
+                if id_t == self.id_team and self.distance_joueur(id_t,id_p) < self.distance_joueur(j):
+              
+                  j = self.state.player_state(id_t, id_p).position
+                else:
+                 continue
+            else : 
+                continue
+        return j
         
  ######################################################################################################################
  ########################    pour le Qlearning    ######################################################
@@ -402,5 +424,11 @@ class PlayerDecorator :
       else:
         return False
                       
-   
+    def distance_ballexy(self,x,y):
+       if self.distance_balle() >= x and self.distance_balle() < y:
+       
+         return True
+       else:
+         return False
+         
         

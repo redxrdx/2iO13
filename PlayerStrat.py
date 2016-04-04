@@ -17,7 +17,7 @@ def finition(MyState):
     return MyState.finition()
     
 def conserver(MyState):
-    return MyState.conserver2()
+    return MyState.conserver2() 
     
 def tirer(MyState):
     return MyState.tir_but()
@@ -25,9 +25,6 @@ def tirer(MyState):
 def dribbler(MyState):
     MyState.dribbler() 
     
-    
-def accelerer(MyState):
-    MyState.accelerer()
 
 def passer(MyState):
    if (MyState.faire_passe() == True) :  
