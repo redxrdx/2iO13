@@ -26,6 +26,8 @@ if __name__=="__main__":
 #    keytest.add("c",central)
 
 ############## pour le gardien #########"""
+
+
     keytest.add("g",posG)
     keytest.add("d",posGH)
     keytest.add("c",posGB)   
