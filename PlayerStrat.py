@@ -11,7 +11,7 @@ from tools import *
 
 
 
-# commandes basiques : 
+######## commandes basiques : (pour keytest) ###########" 
 
 def finition(MyState):
     return MyState.finition()
@@ -35,13 +35,13 @@ def passer(MyState):
   
 
 
-  # attaquant  
+  # ### attaquant #####  
 def position(MyState):
     return MyState.avant_centre()
  
 
 
-  #gardien
+  #######  gardien #########
     
 def posG(MyState):
     return MyState.positionG()
@@ -53,8 +53,15 @@ def degG(MyState):
     return MyState.degager()
     
     
-#classes :
-
+#########################  classes :####################
+  
+  
+  
+  
+       ############# goal #########
+  
+  
+  
 def goal(MyState):   
       
      
@@ -72,8 +79,8 @@ def goal(MyState):
   
       return MyState.positionG()
        
-      
-      
+   ##############    attaquant   ############"     
+       
 def scoreG(MyState):
    
   x = Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT/2) 
@@ -86,6 +93,9 @@ def scoreG(MyState):
   else:
        return MyState.aller_vers(x)     
     
+    
+    
+    ############# defenseur ##########
     
 def defence(MyState):
  
@@ -103,7 +113,7 @@ def defence(MyState):
     return MyState.suivre_jeu()
  
      
-
+################### attaquant pointe ##############"
 
 def fullStrike(MyState) :
   
@@ -137,18 +147,8 @@ def fullStrike(MyState) :
 #     
 #     return MyState.avant_centre()      
 # 
-def j1(MyState):
-     if MyState.balle_chez_nous():    
-         if (MyState.distance_balle < 5):
-             return MyState.conserver2()
-         else:
-             return MyState.defendre()
-     else:
-        if (MyState.position_balle().x > settings.GAME_WIDTH - 50):
-            return MyState.tir_but()
-        else:
-            return MyState.conserver2()
-    
+
+################# millieu ##################
     
 def millieu(MyState) :
    
@@ -173,7 +173,7 @@ def millieu(MyState) :
       else :
         return MyState.suivre_jeuM()
        
-
+############# defenseur lateral (asscié aux commandes pour centrer) ###########
 
        
 def lateral(MyState) :
@@ -192,7 +192,10 @@ def lateral(MyState) :
   else:
            return  MyState.conserver()
            
-           
+        
+############### defenseur central  ##################
+        
+        
 def Dcentral(MyState):
   
   if MyState.balle_chez_nous():    
@@ -205,3 +208,22 @@ def Dcentral(MyState):
          return MyState.positionDC()
   else:
       return MyState.positionDC()
+      
+      
+
+
+########### classe pour 1 joueur ###########
+
+
+
+def j1(MyState):
+     if MyState.balle_chez_nous():    
+         if (MyState.distance_balle < 5):
+             return MyState.conserver2()
+         else:
+             return MyState.defendre()
+     else:
+        if (MyState.position_balle().x > settings.GAME_WIDTH - 50):
+            return MyState.tir_but()
+        else:
+            return MyState.conserver2()

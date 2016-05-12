@@ -21,16 +21,7 @@ def gen_features(state,id_team,id_player):
     return [bpos.distance(mpos),bpos.distance(myg),bpos.distance(hisg)]
 #Nom des features (optionel)
 gen_features.names = ["ball_dist","mygoal_dist","hisgoal_dist"]
-
-
-
-    
-    
-
-
-    
-   
-            
+       
 def build_apprentissage(fn,generator):
     ex_raw = KeyboardStrategy.read(fn)
     exemples = []

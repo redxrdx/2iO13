@@ -13,21 +13,23 @@ if __name__=="__main__":
     prefix = "tree"
     if len(sys.argv)>1:
         prefix = sys.argv[1]    
-    keytest = KeyboardStrategy(fn = "mon_fichier")
-    keytest.add("d",defenseG)
+    keytest = KeyboardStrategy(fn = "goal")
+   # keytest.add("d",defenseG)
    # keytest.add("a",attaqueG)
     keytest.add("z",millieu)
     keytest.add("f",finition)
     keytest.add("t",tirer)
     keytest.add("c",conserver)
     keytest.add("g",dribbler)
-    keytest.add("q",passer)
-    keytest.add("x",position)   
+    #keytest.add("q",passer)
+    #keytest.add("x",position)   
 #    keytest.add("c",central)
-#    keytest.add("g",posG)
-#    keytest.add("d",posGH)
-#    keytest.add("c",posGB)   
-#    keytest.add("x",degG)
+
+############## pour le gardien #########"""
+    keytest.add("g",posG)
+    keytest.add("d",posGH)
+    keytest.add("c",posGB)   
+    keytest.add("x",degG)
     
    
     team_noob = SoccerTeam("keyb",[Player("KBs",millieu),Player("Defense",defenseG),Player("taaaaaa",attaqueG),Player("Dg",goalG)])
@@ -35,6 +37,6 @@ if __name__=="__main__":
     teamPSG4 = SoccerTeam("team1",[Player("trapp",attaqueG),Player("silva",defenseG)])
 #    ,Player("aurier",defenseG),Player("zlatan",attaqueG)])
 
-    match = SoccerMatch(teama4,teamPSG4,3000)
+    match = SoccerMatch(teama4,team_noob,3000)
     show(match)
-    keytest.write("mon_fichier.exp",True)
+    keytest.write("goal.exp",True)

@@ -41,7 +41,9 @@ class PlayerDecorator :
         self.id_player = id_player
     
 
-#################### position joueur et balle    
+#################### position joueur et balle    #########
+
+
     def position_joueur(self):
           return self.state.player_state(self.id_team, self.id_player).position  
 
@@ -52,7 +54,7 @@ class PlayerDecorator :
         return self.position_joueur().distance(self.state.ball.position)     
 
 
-######################  positions pour corner    
+######################  positions pour corner   ########## 
     def cornerX(self):
         if (self.position_balle().x >= settings.GAME_WIDTH-10):
             return 1
@@ -72,7 +74,7 @@ class PlayerDecorator :
        else :
         return 0
         
-################################## actions concernant la balle
+################################## actions concernant la balle ####################
         
         
     def balle_chez_adv(self):
@@ -113,7 +115,7 @@ class PlayerDecorator :
      
 
 
-############################### differents tirs :       
+############################### differents tirs :##############
    
     def tirer(self):
        
@@ -206,7 +208,7 @@ class PlayerDecorator :
         return SoccerAction(self.position_balle() - self.position_joueur(),self.degage_alea())
 
 
-########################### deplacements et placements     
+########################### deplacements et placements  ########################"   
   
 
     def aller_vers(self, c):        

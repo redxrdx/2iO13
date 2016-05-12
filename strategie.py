@@ -30,6 +30,9 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
     
+############## stratregies associés au clavier ##########
+    
+    
 keytest = KeyboardStrategy(fn = "mon_fichier2.exp")
 
 goalG = Strat(goal, "goal")
@@ -63,6 +66,16 @@ keytest.add("g",dribbler)
 keytest.add("q",passer)
 keytest.add("f",finition)
 keytest.add("x",position)
+
+
+
+
+
+
+
+
+################# les classes de base ( premiers cours ) basestrategy plus mystate ###################
+
 
 class Goal(BaseStrategy):
   
