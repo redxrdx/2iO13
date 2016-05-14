@@ -31,8 +31,6 @@ team12j = SoccerTeam("team1",[Player("ert",attaqueG)])
 team2 = SoccerTeam("k2",[Player("serge",defenseG),Player("ramos",attaqueG)])
 team4 = SoccerTeam("test",[Player("t",goalG),Player("s",defenseG),Player("a",millieu),Player("z",pointe)])
 
-team2j = SoccerTeam("k2",[Player("serge",defenseG),Player("ramos",treeStrat)])
-teamIA = SoccerTeam("team1",[Player("ert",MStrat),Player("ramos",goalG),Player("t",AStrat),Player("s",DStrat)])
 
 ############## chargement du joueur a partir du fichier.pkl associé ########## 
 
@@ -52,3 +50,5 @@ defenseI = cPickle.load(file(fn3))
 dic = {"goal":goalG,"attaquant":attaqueG,"defenseur":defenseG,"millieu":millieu,"defenseCentral":central,"conserver":conserver,"dribbler":dribbler,"tirer":tirer,"passer":passer,"finition":finition,"position":position,"dc":central}
 DStrat = DTreeStrategy(defenseI,dic,gen_features)
 
+team2j = SoccerTeam("k2",[Player("serge",defenseG),Player("ramos",treeStrat)])
+teamIA = SoccerTeam("team1",[Player("ert",MStrat),Player("ramos",goalG),Player("t",AStrat),Player("s",DStrat)])
