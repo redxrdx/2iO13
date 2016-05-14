@@ -34,6 +34,8 @@ class Strat(BaseStrategy):
 
 keytest = KeyboardStrategy(fn = "mon_fichier2.exp")
 
+############## strategies principales ############
+
 goalG = Strat(goal, "goal")
 attaqueG = Strat(scoreG,"attaquant")
 defenseG = Strat(defence,"defenseur")
@@ -43,9 +45,7 @@ millieu = Strat(millieu,"millieu")
 central = Strat(Dcentral,"dc")
 joueur1 = Strat(j1,"j1")
 
-
-############## stratregies associés au clavier ##########
-
+######## strategies standards #############
 
 conserver = Strat(conserver,"conserver")
 tirer = Strat(tirer,"tirer")
@@ -58,6 +58,7 @@ posGH = Strat(posGH,"position")
 posGB = Strat(posGB,"position")
 degG = Strat(degG,"position")
 
+############## stratregies associés au clavier ##########
 
 keytest.add("d",defenseG)
 keytest.add("a",attaqueG)
