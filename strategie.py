@@ -14,6 +14,7 @@ from PlayerStrat import *
 
 
 
+################# appel du miroir ##############
 
 class Strat(BaseStrategy):
     def __init__(self,comportement,name):
@@ -30,9 +31,7 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
     
-############## stratregies associés au clavier ##########
-    
-    
+
 keytest = KeyboardStrategy(fn = "mon_fichier2.exp")
 
 goalG = Strat(goal, "goal")
@@ -43,6 +42,10 @@ pointe = Strat(fullStrike,"pointe")
 millieu = Strat(millieu,"millieu")
 central = Strat(Dcentral,"dc")
 joueur1 = Strat(j1,"j1")
+
+
+############## stratregies associés au clavier ##########
+
 
 conserver = Strat(conserver,"conserver")
 tirer = Strat(tirer,"tirer")
