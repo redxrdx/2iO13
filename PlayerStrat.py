@@ -218,7 +218,7 @@ def Dcentral(MyState):
 
 def j1(MyState):
      if MyState.balle_chez_nous():    
-         if (MyState.distance_balle < 5):
+         if (MyState.possede_balle):
              return MyState.conserver2()
          else:
              return MyState.defendre()
